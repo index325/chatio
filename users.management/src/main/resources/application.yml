@@ -1,0 +1,45 @@
+server:
+  port: 9000
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/chat-io
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    flyway:
+      enabled: true
+      schemas: user
+      ignore-future-migrations: false
+      target: 2
+  kafka:
+    bootstrap-servers: localhost:9092
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/auth/realms/chat.io
+          jwt-set-uri: http://localhost:8080/auth/realms/chat.io/protocol/openid-connect/certs
+
+kafka:
+  topic:
+    name: chat.io
+
+keycloak:
+  realm: chat.io
+  bearer-only: true
+  auth-server-url: http://localhost:8080/auth
+  resource: chat.io
+  use-resource-role-mappings: true
+  enabled: true
