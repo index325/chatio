@@ -1,0 +1,40 @@
+server:
+  port: 9002
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/auth/realms/chat.io
+          jwt-set-uri: http://localhost:8080/auth/realms/chat.io/protocol/openid-connect/certs
+  kafka:
+    producer:
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      group-id: topic-user
+      bootstrap-servers: localhost:9092
+    properties:
+      auto:
+        register:
+          schemas: true
+      schema:
+        registry:
+          url: http://127.0.0.1:8081
+
+keycloak:
+  realm: chat.io
+  bearer-only: true
+  auth-server-url: http://localhost:8080/auth
+  resource: chat.io.message-ms
+  use-resource-role-mappings: true
+  enabled: true
+
+auto:
+  create:
+    topics:
+      enable: true
+
+topic:
+  name:
+    producer: chat.io

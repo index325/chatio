@@ -1,0 +1,11 @@
+{
+  "realm": "chat.io",
+  "auth-server-url" : "http://localhost:8080/auth",
+  "resource" : "chat.io.auth",
+  "bearer-only": true,
+  "ssl-required": "external",
+  "use-resource-role-mappings": true,
+  "credentials": {
+    "secret": "0b34df15-1605-4482-90bd-9f4c919ec7bf"
+  }
+}

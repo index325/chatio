@@ -1,0 +1,18 @@
+server:
+  port: 9001
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/auth/realms/chat.io
+          jwt-set-uri: http://localhost:8080/auth/realms/chat.io/protocol/openid-connect/certs
+
+keycloak:
+  realm: chat.io.auth
+  bearer-only: true
+  auth-server-url: http://localhost:8080/auth
+  resource: chat.io.auth
+  use-resource-role-mappings: true
+  enabled: true

@@ -1,8 +1,7 @@
-package com.index325.users.management.chat.io.models;
+package com.index325.message.consumer.chat.io.models;
 
-import com.index325.users.management.chat.io.config.keycloak.listeners.SystemUserKeycloakListener;
+
 import lombok.*;
-
 import javax.persistence.*;
 
 @Entity
@@ -12,7 +11,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-@EntityListeners({SystemUserKeycloakListener.class})
 public class User {
 
     @Id

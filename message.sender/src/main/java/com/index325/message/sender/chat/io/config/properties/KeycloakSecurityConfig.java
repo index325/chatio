@@ -1,4 +1,4 @@
-package com.index325.users.management.chat.io.config.keycloak.properties;
+package com.index325.message.sender.chat.io.config.properties;
 
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
@@ -19,11 +19,7 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/v1/users/logout").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/users/signup").permitAll();
+        http.csrf().disable();
 
         http.cors()
                 .disable()

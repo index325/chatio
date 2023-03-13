@@ -1,4 +1,4 @@
-package com.index325.users.management.chat.io.config.keycloak.properties;
+package com.index325.users.authentication.chat.io.config.keycloak.properties;
 
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @KeycloakConfiguration
 public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
@@ -22,17 +23,7 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/v1/users/logout").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/users/signup").permitAll();
-
-        http.cors()
-                .disable()
-                .authorizeRequests()
-                .and()
-                .authorizeRequests()
-                .anyRequest().hasAuthority("ROLE_USER")
-                .and().oauth2ResourceServer().jwt()
-                .jwtAuthenticationConverter(getJwtAuthenticationConverter());
+                .antMatchers(HttpMethod.POST, "/api/v1/login").permitAll();
     }
 
     @Autowired

@@ -65,7 +65,7 @@ public class UserKeyCloakServiceImpl implements UserKeyCloakService {
                     .stream()
                     .findFirst()
                     .orElseThrow(() -> new NotFoundException("Email: " + systemUser.getEmail() + "not found"));
-            systemUser.setIdUserKeycloak(userSaved.getId());
+            systemUser.setId(userSaved.getId());
             return systemUser;
         }
         catch (ForbiddenException e) {
@@ -84,12 +84,12 @@ public class UserKeyCloakServiceImpl implements UserKeyCloakService {
     public User update(User systemUser) {
         log.info("update user {}", systemUser.getName());
 
-        UserResource userResource = usersResource.get(systemUser.getIdUserKeycloak());
+        UserResource userResource = usersResource.get(systemUser.getId());
         UserRepresentation userRepresentation = userResource.toRepresentation();
         if (!Objects.equals(userRepresentation.getUsername().toLowerCase(), systemUser.getEmail().toLowerCase()) ||
                 !Objects.equals(userRepresentation.getEmail(), systemUser.getEmail())) {
 
-            try (Response response = usersResource.delete(systemUser.getIdUserKeycloak())) {
+            try (Response response = usersResource.delete(systemUser.getId())) {
                 if (!Objects.equals(HttpStatus.NO_CONTENT, response.getStatus())) {
                     throw new AppException(Codes.Error.User.CouldNotUpdateThisUser.getMessage(), Codes.Error.User.CouldNotUpdateThisUser.getCode());
                 }
@@ -129,7 +129,7 @@ public class UserKeyCloakServiceImpl implements UserKeyCloakService {
                 .email(userRepresentation.getEmail())
                 .status(Boolean.TRUE.equals(userRepresentation.isEnabled()) ?
                         User.UserStatusEnum.ACTIVE : User.UserStatusEnum.INACTIVE)
-                .idUserKeycloak(userRepresentation.getId())
+                .id(userRepresentation.getId())
                 .build();
     }
 
@@ -173,7 +173,7 @@ public class UserKeyCloakServiceImpl implements UserKeyCloakService {
     @Override
     public List<UserSessionRepresentation> getAllActiveSessionByUser(User systemUser) {
         try {
-            return usersResource.get(systemUser.getIdUserKeycloak()).getUserSessions();
+            return usersResource.get(systemUser.getId()).getUserSessions();
         } catch (ClientErrorException e) {
             ErrorRepresentation error = e.getResponse().readEntity(ErrorRepresentation.class);
             log.error("Error to verify login logout users. {}", error.getErrorMessage());
@@ -184,7 +184,7 @@ public class UserKeyCloakServiceImpl implements UserKeyCloakService {
     @Override
     public void logout(User systemUser) {
         try {
-            usersResource.get(systemUser.getIdUserKeycloak()).logout();
+            usersResource.get(systemUser.getId()).logout();
         } catch (ClientErrorException e) {
             ErrorRepresentation error = e.getResponse().readEntity(ErrorRepresentation.class);
             log.error("Error to logout user. {}", error.getErrorMessage());

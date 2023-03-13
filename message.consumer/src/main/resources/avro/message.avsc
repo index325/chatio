@@ -1,0 +1,15 @@
+{
+    "type": "record",
+    "name": "MessageAvro",
+    "namespace": "com.index325.chat.io",
+    "fields": [{
+        "name": "fromId",
+        "type": "string"
+    }, {
+        "name": "messageBody",
+        "type": "string"
+    }, {
+        "name": "toId",
+        "type": "string"
+    }]
+}
